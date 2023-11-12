@@ -6,95 +6,94 @@ export const generateContentXml = (name: string): string => `<?xml version="1.0"
 	<includedXmlFiles />
 	<includedDataFiles />
 	<dataFiles>
-	
+
 <!-- maps props rpfs-->
 	
-		<Item>
-			<filename>dlc_${name}:/%PLATFORM%/levels/gta5/props/map_props.rpf</filename>
-			<fileType>RPF_FILE</fileType>
-			<overlay value="false" />
-			<disabled value="false" />
-			<persistent value="false" />
-		</Item>
-		
+	<Item>
+		<filename>dlc_${name}:/%PLATFORM%/levels/gta5/props/map_props.rpf</filename>
+		<fileType>RPF_FILE</fileType>
+		<disabled value="true"/>
+		<persistent value="true"/>
+		<overlay value="true"/>
+	</Item>
+	
 <!-- maps meta rpfs -->
-		
-		<Item>
-			<filename>dlc_${name}:/%PLATFORM%/levels/gta5/props/map_meta.rpf</filename>
-			<fileType>RPF_FILE</fileType>
-			<overlay value="false" />
-			<disabled value="false" />
-			<persistent value="false" />
-			<contents>CONTENTS_DLC_MAP_DATA</contents>
-		</Item>
-		
+	
+	<Item>
+		<filename>dlc_${name}:/%PLATFORM%/levels/gta5/props/map_meta.rpf</filename>
+		<fileType>RPF_FILE</fileType>
+		<disabled value="true"/>
+		<persistent value="true"/>
+		<overlay value="true"/>
+		<contents>CONTENTS_DLC_MAP_DATA</contents>
+	</Item>
+	
 <!-- interior props -->
 
-		<Item>
-			<filename>dlc_${name}:/%PLATFORM%/levels/gta5/interiors/int_props.rpf</filename>
-			<fileType>RPF_FILE</fileType>
-			<overlay value="false" />
-			<disabled value="false" />
-			<persistent value="false" />
-		</Item>
-		
+	<Item>
+		<filename>dlc_${name}:/%PLATFORM%/levels/gta5/interiors/int_props.rpf</filename>
+		<fileType>RPF_FILE</fileType>
+		<disabled value="true"/>
+		<persistent value="true"/>
+		<overlay value="true"/>
+	</Item>
+	
 <!-- interior meta -->
 
-		<Item>
-			<filename>dlc_${name}:/%PLATFORM%/levels/gta5/interiors/int_meta.rpf</filename>
-			<fileType>RPF_FILE</fileType>
-			<overlay value="false" />
-			<disabled value="false" />
-			<persistent value="false" />
-			<contents>CONTENTS_DLC_MAP_DATA</contents>
-		</Item>
+	<Item>
+		<filename>dlc_${name}:/%PLATFORM%/levels/gta5/interiors/int_meta.rpf</filename>
+		<fileType>RPF_FILE</fileType>
+		<disabled value="true"/>
+		<persistent value="true"/>
+		<overlay value="true"/>
+		<contents>CONTENTS_DLC_MAP_DATA</contents>
+	</Item>
+
 	</dataFiles>
 	<contentChangeSets>
 		<Item>
-			<changeSetName>CCS_${name.toUpperCase()}_NG_STREAMING_MAP</changeSetName>
-			<filesToEnable>
+	      <changeSetName>${name.toUpperCase()}_MAP</changeSetName>
+	      <mapChangeSetData>
+	        <Item>
+	          <associatedMap>MO_JIM_L11</associatedMap>
+	          <filesToInvalidate />
+	          <filesToEnable>
 				<Item>dlc_${name}:/%PLATFORM%/levels/gta5/props/map_props.rpf</Item>
-        <Item>dlc_${name}:/%PLATFORM%/levels/gta5/props/map_meta.rpf</Item>
-        <Item>dlc_${name}:/%PLATFORM%/levels/gta5/interiors/int_props.rpf</Item>
+				<Item>dlc_${name}:/%PLATFORM%/levels/gta5/props/map_meta.rpf</Item>
+				<Item>dlc_${name}:/%PLATFORM%/levels/gta5/interiors/int_props.rpf</Item>
 				<Item>dlc_${name}:/%PLATFORM%/levels/gta5/interiors/int_meta.rpf</Item>
-			</filesToEnable>
-			<executionConditions>
-				<activeChangesetConditions>
-				</activeChangesetConditions>
-				<genericConditions>$level=MO_JIM_L11</genericConditions>
-			</executionConditions>
-		</Item>
+	          </filesToEnable>
+	        </Item>
+	      </mapChangeSetData>
+		  <requiresLoadingScreen value="true"/>
+	      <loadingScreenContext>LOADINGSCREEN_CONTEXT_LAST_FRAME</loadingScreenContext>
+	      <useCacheLoader value="true"/>
+	    </Item>
 	</contentChangeSets>
-	<patchFiles />
+    <patchFiles />
 </CDataFileMgr__ContentsOfDataFileXml>`;
 
 export const generateSetupXml = (name: string): string => `<?xml version="1.0" encoding="UTF-8"?>
 <SSetupData>
-  <deviceName>dlc_${name}</deviceName>
-  <datFile>content.xml</datFile>
-  <timeStamp>${moment().format('DD/MM/YYYY HH:mm:ss')}</timeStamp>
-  <nameHash>${name}</nameHash>
-  <contentChangeSetGroups>
-    <Item>
-			<NameHash>GROUP_EARLY_ON</NameHash>
-			<ContentChangeSets>
-				<Item>CCS_${name.toUpperCase()}_NG_INIT</Item>
-			</ContentChangeSets>
-		</Item>
+	<deviceName>dlc_${name}</deviceName>
+	<datFile>content.xml</datFile>
+	<timeStamp>${moment().format('DD/MM/YYYY HH:mm')}</timeStamp>
+	<nameHash>${name}</nameHash>
+	<contentChangeSets />
+	<contentChangeSetGroups>
 		<Item>
-			<NameHash>GROUP_UPDATE_STREAMING</NameHash>
-			<ContentChangeSets>
-				<Item>CCS_${name.toUpperCase()}_NG_STREAMING</Item>
-				<Item>CCS_${name.toUpperCase()}_NG_STREAMING_MAP</Item>
-			</ContentChangeSets>
-		</Item>
-  </contentChangeSetGroups>
-  <startupScript />
+	      <NameHash>GROUP_MAP</NameHash>
+	      <ContentChangeSets>
+	        <Item>${name.toUpperCase()}_MAP</Item>
+	      </ContentChangeSets>
+	    </Item>
+	</contentChangeSetGroups>
+	<startupScript />
 	<scriptCallstackSize value="0" />
-	<type>EXTRACONTENT_LEVEL_PACK</type>
-	<order value="2" />
+	<type>EXTRACONTENT_COMPAT_PACK</type>
+	<order value="1005" />
 	<minorOrder value="0" />
-	<isLevelPack value="true" />
+	<isLevelPack value="false" />
 	<dependencyPackHash />
 	<requiredVersion />
 	<subPackCount value="0" />
